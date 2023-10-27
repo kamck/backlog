@@ -4,23 +4,6 @@ import Playthrough from "./components/playthrough";
 import { useEffect, useState } from "react";
 
 export default function Page() {
-  const myData = [
-    {
-      title: "one",
-      platform: "PS1",
-      status: "unplayed",
-      startDate: null,
-      endDate: null,
-    },
-    {
-      title: "two",
-      platform: "NSW",
-      status: "unplayed",
-      startDate: null,
-      endDate: null,
-    },
-  ];
-
   const [playthroughs, setPlaythroughs] = useState([]);
 
   useEffect(getData, []);
