@@ -1,7 +1,7 @@
 'use client';
 
 import Playthrough from "./components/playthrough";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page() {
   const myData = [
@@ -21,10 +21,22 @@ export default function Page() {
     },
   ];
 
-  const [playthroughs, setPlaythroughs] = useState(myData);
+  const [playthroughs, setPlaythroughs] = useState([]);
+
+  useEffect(getData, []);
+
+  function getData() {
+    fetch("/api").then(res => {
+      if (res.ok) {
+        res.json().then(json => setPlaythroughs(json));
+      }
+    });
+  }
 
   function sendData() {
     const title = document.getElementById("ftitle").value;
+    const platform = document.getElementById("fplatform").value;
+    const data = { title, platform }
 
     fetch("/api", {
       method: "POST",
@@ -33,13 +45,14 @@ export default function Page() {
       credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
-      body: JSON.stringify({ message: title })
+      body: JSON.stringify(data),
     }).then(response => {
       if (response.ok) {
-	setPlaythroughs([...playthroughs, { title }]);
+	setPlaythroughs([...playthroughs, data]);
       }
     });
   }
@@ -50,13 +63,14 @@ export default function Page() {
 	<h1>Unplayed</h1>
 	<ul>
 	  {playthroughs.map(d =>
-	    <Playthrough key={d.title} title={d.title} platform={d.platform} />
+	    <Playthrough key={d.id} title={d.title} platform={d.platform} />
 	  )}
 	</ul>
       </div>
 
       <div>
         <input type="text" id="ftitle" name="ftitle" />
+        <input type="text" id="fplatform" name="fplatform" />
         <input type="button" value="Save" onClick={sendData} />
       </div>
     </>
