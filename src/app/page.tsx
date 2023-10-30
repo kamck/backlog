@@ -2,6 +2,7 @@
 
 import Playthrough from "./components/playthrough";
 import { useEffect, useState } from "react";
+import { getAll, create } from "./lib/apiclient";
 
 export default function Page() {
   const [playthroughs, setPlaythroughs] = useState([]);
@@ -9,7 +10,7 @@ export default function Page() {
   useEffect(getData, []);
 
   function getData() {
-    fetch("/api").then(res => {
+    getAll().then(res => {
       if (res.ok) {
         res.json().then(json => setPlaythroughs(json));
       }
@@ -21,21 +22,12 @@ export default function Page() {
     const platform = (document.getElementById("fplatform") as HTMLInputElement).value;
     const data = { title, platform };
 
-    fetch("/api", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify(data),
-    }).then(response => {
+    create(data).then(response => {
       if (response.ok) {
 	setPlaythroughs([...playthroughs, data]);
+      } else {
+        alert("An error occurred");
+	console.log(response);
       }
     });
   }
