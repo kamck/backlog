@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 interface PlaythroughProps {
+  id: number;
   title: string;
   platform: string;
 }
@@ -10,7 +11,7 @@ export default function Playthrough({ id, title, platform }: PlaythroughProps) {
 
   function getData() {
     return {
-      title: document.getElementById('ftitle').value,
+      title: (document.getElementById('ftitle') as HTMLInputElement).value,
       platform,
     }
   }

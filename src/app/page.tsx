@@ -46,7 +46,7 @@ export default function Page() {
 	<h1>Unplayed</h1>
 	<ul>
           {playthroughs.map(d =>
-	    <Playthrough key={d.id} id={d.id} title={d.title} platform={d.platform} />
+            <Playthrough key={d.id} id={d.id} title={d.title} platform={d.platform} />
           )}
 	</ul>
       </div>
