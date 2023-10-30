@@ -7,16 +7,14 @@ interface PlaythroughProps {
 }
 
 export default function Playthrough({ id, title, platform }: PlaythroughProps) {
+  const [myTitle, setMyTitle] = useState(title);
+  const [myPlatform, setMyPlatform] = useState(platform);
   const [isOpen, setIsOpen] = useState(false);
 
-  function getData() {
-    return {
-      title: (document.getElementById('ftitle') as HTMLInputElement).value,
-      platform,
-    }
-  }
-
   function savePlaythrough() {
+    const newTitle = (document.getElementById('ftitle') as HTMLInputElement).value;
+    const newPlatform = (document.getElementById('fplatform') as HTMLInputElement).value;
+
     fetch(`/api/${id}`, {
       method: "PATCH",
       mode: "cors",
@@ -28,23 +26,38 @@ export default function Playthrough({ id, title, platform }: PlaythroughProps) {
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
-      body: JSON.stringify(getData())
-    }).then(response => console.log(response));
+      body: JSON.stringify({
+        title: newTitle,
+	platform: newPlatform,
+      })
+    }).then(response => {
+      if (response.ok) {
+        setIsOpen(false);
+	setMyTitle(newTitle);
+	setMyPlatform(newPlatform);
+      } else {
+        alert("An error occurred");
+	console.log(response);
+      }
+    });
   }
 
   if (isOpen) {
     return (
       <li>
         <div className="playthroughedit">
-          <input id="ftitle" name="ftitle" defaultValue={title} />
-          <button id="fsave" name="fsame" value="Save" onClick={savePlaythrough}>Save</button>
+          <input id="ftitle" name="ftitle" defaultValue={myTitle} />
+          <input id="fplatform" name="fplatform" defaultValue={myPlatform} />
+          <div style={{ float: "none" }}>
+            <button id="fsave" name="fsave" onClick={savePlaythrough}>Save</button>
+          </div>
         </div>
       </li>
     );
   } else {
     return (
       <li onClick={() => setIsOpen(true)} >
-        {title} <span>{platform}</span><span>dates</span>
+        {myTitle} <span>{myPlatform}</span><span>dates</span>
       </li>
     );
   }
