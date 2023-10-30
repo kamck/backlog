@@ -1,8 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 
 export async function PATCH(request: Request, { params }: { params: { id: string } }) {
-  console.debug(`Got ID ${params.id}`);
-
   const prisma = new PrismaClient();
   const myData = await request.json();
 

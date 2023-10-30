@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { update } from "../lib/apiclient";
 
 interface PlaythroughProps {
   id: number;
@@ -15,21 +16,9 @@ export default function Playthrough({ id, title, platform }: PlaythroughProps) {
     const newTitle = (document.getElementById('ftitle') as HTMLInputElement).value;
     const newPlatform = (document.getElementById('fplatform') as HTMLInputElement).value;
 
-    fetch(`/api/${id}`, {
-      method: "PATCH",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify({
-        title: newTitle,
-	platform: newPlatform,
-      })
+    update(id, {
+      title: newTitle,
+      platform: newPlatform,
     }).then(response => {
       if (response.ok) {
         setIsOpen(false);
