@@ -17,9 +17,9 @@ export default function Page() {
   }
 
   function sendData() {
-    const title = document.getElementById("ftitle").value;
-    const platform = document.getElementById("fplatform").value;
-    const data = { title, platform }
+    const title = (document.getElementById("ftitle") as HTMLInputElement).value;
+    const platform = (document.getElementById("fplatform") as HTMLInputElement).value;
+    const data = { title, platform };
 
     fetch("/api", {
       method: "POST",
@@ -45,9 +45,9 @@ export default function Page() {
       <div>
 	<h1>Unplayed</h1>
 	<ul>
-	  {playthroughs.map(d =>
-	    <Playthrough key={d.id} title={d.title} platform={d.platform} />
-	  )}
+          {playthroughs.map(d =>
+	    <Playthrough key={d.id} id={d.id} title={d.title} platform={d.platform} />
+          )}
 	</ul>
       </div>
 
