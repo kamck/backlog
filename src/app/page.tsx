@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Playthrough from "./components/playthrough";
 import { useEffect, useState } from "react";
@@ -10,37 +10,57 @@ export default function Page() {
   useEffect(getData, []);
 
   function getData() {
-    getAll().then(res => {
+    getAll().then((res) => {
       if (res.ok) {
-        res.json().then(json => setPlaythroughs(json));
+        res.json().then((json) => setPlaythroughs(json));
       }
     });
   }
 
   function sendData() {
     const title = (document.getElementById("ftitle") as HTMLInputElement).value;
-    const platform = (document.getElementById("fplatform") as HTMLInputElement).value;
+    const platform = (document.getElementById("fplatform") as HTMLInputElement)
+      .value;
     const data = { title, platform };
 
-    create(data).then(response => {
+    create(data).then((response) => {
       if (response.ok) {
-	setPlaythroughs([...playthroughs, data]);
+        setPlaythroughs([...playthroughs, data]);
       } else {
         alert("An error occurred");
-	console.log(response);
+        console.log(response);
       }
     });
   }
 
+  const buildList = (status: string) =>
+    playthroughs
+      .filter((p) => p.status === status)
+      .map((d) => (
+        <Playthrough
+          key={d.id}
+          id={d.id}
+          title={d.title}
+          platform={d.platform}
+          status={d.status}
+        />
+      ));
+
   return (
     <>
       <div>
-	<h1>Unplayed</h1>
-	<ul>
-          {playthroughs.map(d =>
-            <Playthrough key={d.id} id={d.id} title={d.title} platform={d.platform} />
-          )}
-	</ul>
+        <h1>Unplayed</h1>
+        <ul>{buildList("UNPLAYED")}</ul>
+      </div>
+
+      <div>
+        <h1>Unfinished</h1>
+        <ul>{buildList("UNFINISHED")}</ul>
+      </div>
+
+      <div>
+        <h1>Finished</h1>
+        <ul>{buildList("FINISHED")}</ul>
       </div>
 
       <div>

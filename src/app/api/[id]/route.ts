@@ -13,7 +13,11 @@ export async function PATCH(
 
   await prisma.playthrough.update({
     where: { id: Number(params.id) },
-    data: { title: myData.title },
+    data: {
+      title: myData.title,
+      platform: myData.platform,
+      status: myData.status,
+    },
   });
 
   return new Response();
