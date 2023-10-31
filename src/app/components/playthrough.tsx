@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { update } from "../lib/apiclient";
 
 interface PlaythroughProps {
@@ -13,20 +13,23 @@ export default function Playthrough({ id, title, platform }: PlaythroughProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function savePlaythrough() {
-    const newTitle = (document.getElementById('ftitle') as HTMLInputElement).value;
-    const newPlatform = (document.getElementById('fplatform') as HTMLInputElement).value;
+    const newTitle = (document.getElementById("ftitle") as HTMLInputElement)
+      .value;
+    const newPlatform = (
+      document.getElementById("fplatform") as HTMLInputElement
+    ).value;
 
     update(id, {
       title: newTitle,
       platform: newPlatform,
-    }).then(response => {
+    }).then((response) => {
       if (response.ok) {
         setIsOpen(false);
-	setMyTitle(newTitle);
-	setMyPlatform(newPlatform);
+        setMyTitle(newTitle);
+        setMyPlatform(newPlatform);
       } else {
         alert("An error occurred");
-	console.log(response);
+        console.log(response);
       }
     });
   }
@@ -38,15 +41,18 @@ export default function Playthrough({ id, title, platform }: PlaythroughProps) {
           <input id="ftitle" name="ftitle" defaultValue={myTitle} />
           <input id="fplatform" name="fplatform" defaultValue={myPlatform} />
           <div style={{ float: "none" }}>
-            <button id="fsave" name="fsave" onClick={savePlaythrough}>Save</button>
+            <button id="fsave" name="fsave" onClick={savePlaythrough}>
+              Save
+            </button>
           </div>
         </div>
       </li>
     );
   } else {
     return (
-      <li onClick={() => setIsOpen(true)} >
-        {myTitle} <span>{myPlatform}</span><span>dates</span>
+      <li onClick={() => setIsOpen(true)}>
+        {myTitle} <span>{myPlatform}</span>
+        <span>dates</span>
       </li>
     );
   }

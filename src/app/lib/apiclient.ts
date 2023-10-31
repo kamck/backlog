@@ -3,11 +3,11 @@ interface Playthrough {
   platform: string;
 }
 
-export function getAll() : Promise<Response> {
+export function getAll(): Promise<Response> {
   return fetch("/api");
 }
 
-export function create(playthrough: Playthrough) : Promise<Response> {
+export function create(playthrough: Playthrough): Promise<Response> {
   return fetch("/api", {
     method: "POST",
     mode: "cors",
@@ -15,7 +15,7 @@ export function create(playthrough: Playthrough) : Promise<Response> {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      "Accept": "application/json",
+      Accept: "application/json",
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
@@ -23,7 +23,10 @@ export function create(playthrough: Playthrough) : Promise<Response> {
   });
 }
 
-export function update(id: number, playthrough: Playthrough) : Promise<Response> {
+export function update(
+  id: number,
+  playthrough: Playthrough,
+): Promise<Response> {
   return fetch(`/api/${id}`, {
     method: "PATCH",
     mode: "cors",
@@ -31,7 +34,7 @@ export function update(id: number, playthrough: Playthrough) : Promise<Response>
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      "Accept": "application/json",
+      Accept: "application/json",
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
