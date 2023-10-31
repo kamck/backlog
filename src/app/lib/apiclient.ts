@@ -1,6 +1,7 @@
 interface Playthrough {
   title: string;
   platform: string;
+  status: string;
 }
 
 export function getAll(): Promise<Response> {
