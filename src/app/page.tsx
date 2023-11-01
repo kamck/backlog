@@ -1,6 +1,6 @@
 "use client";
 
-import Playthrough from "./components/playthrough";
+import Playthrough from "./components/Playthrough";
 import { useEffect, useState } from "react";
 import { getAll, create } from "./lib/apiclient";
 

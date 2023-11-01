@@ -1,4 +1,5 @@
 import { useState } from "react";
+import EditPlaythrough from "./EditPlaythrough";
 import { update } from "../lib/apiclient";
 
 interface PlaythroughProps {
@@ -19,15 +20,11 @@ export default function Playthrough({
   const [myStatus, setMyStatus] = useState(status);
   const [isOpen, setIsOpen] = useState(false);
 
-  function savePlaythrough() {
-    const newTitle = (document.getElementById("ftitle") as HTMLInputElement)
-      .value;
-    const newPlatform = (
-      document.getElementById("fplatform") as HTMLInputElement
-    ).value;
-    const newStatus = (document.getElementById("fstatus") as HTMLInputElement)
-      .value;
-
+  function savePlaythrough(
+    newTitle: string,
+    newPlatform: string,
+    newStatus: string,
+  ) {
     update(id, {
       title: newTitle,
       platform: newPlatform,
@@ -48,20 +45,12 @@ export default function Playthrough({
   if (isOpen) {
     return (
       <li>
-        <div className="playthroughedit">
-          <input id="ftitle" name="ftitle" defaultValue={myTitle} />
-          <input id="fplatform" name="fplatform" defaultValue={myPlatform} />
-          <select id="fstatus" name="fstatus" defaultValue={myStatus}>
-            <option value="UNPLAYED">Unplayed</option>
-            <option value="UNFINISHED">Unfinished</option>
-            <option value="FINISHED">Finished</option>
-          </select>
-          <div style={{ float: "none" }}>
-            <button id="fsave" name="fsave" onClick={savePlaythrough}>
-              Save
-            </button>
-          </div>
-        </div>
+        <EditPlaythrough
+          title={myTitle}
+          platform={myPlatform}
+          status={myStatus}
+          updateHandler={savePlaythrough}
+        />
       </li>
     );
   } else {
