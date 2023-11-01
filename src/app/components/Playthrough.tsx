@@ -1,12 +1,17 @@
 import { useState } from "react";
 import EditPlaythrough from "./EditPlaythrough";
-import { update } from "../lib/apiclient";
 
 interface PlaythroughProps {
   id: number;
   title: string;
   platform: string;
   status: string;
+  updateHandler: (
+    id: number,
+    title: string,
+    platform: string,
+    status: string,
+  ) => void;
 }
 
 export default function Playthrough({
@@ -14,10 +19,8 @@ export default function Playthrough({
   title,
   platform,
   status,
+  updateHandler,
 }: PlaythroughProps) {
-  const [myTitle, setMyTitle] = useState(title);
-  const [myPlatform, setMyPlatform] = useState(platform);
-  const [myStatus, setMyStatus] = useState(status);
   const [isOpen, setIsOpen] = useState(false);
 
   function savePlaythrough(
@@ -25,30 +28,17 @@ export default function Playthrough({
     newPlatform: string,
     newStatus: string,
   ) {
-    update(id, {
-      title: newTitle,
-      platform: newPlatform,
-      status: newStatus,
-    }).then((response) => {
-      if (response.ok) {
-        setIsOpen(false);
-        setMyTitle(newTitle);
-        setMyPlatform(newPlatform);
-        setMyStatus(newStatus);
-      } else {
-        alert("An error occurred");
-        console.log(response);
-      }
-    });
+    updateHandler(id, newTitle, newPlatform, newStatus);
+    setIsOpen(false);
   }
 
   if (isOpen) {
     return (
       <li>
         <EditPlaythrough
-          title={myTitle}
-          platform={myPlatform}
-          status={myStatus}
+          title={title}
+          platform={platform}
+          status={status}
           updateHandler={savePlaythrough}
         />
       </li>
@@ -56,7 +46,7 @@ export default function Playthrough({
   } else {
     return (
       <li onClick={() => setIsOpen(true)}>
-        {myTitle} <span>{myPlatform}</span>
+        {title} <span>{platform}</span>
         <span>dates</span>
       </li>
     );
