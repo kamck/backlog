@@ -6,7 +6,7 @@ interface PlaythroughProps {
   title: string;
   platform: string;
   status: string;
-  updateHandler: (
+  handleUpdate: (
     id: number,
     title: string,
     platform: string,
@@ -19,7 +19,7 @@ export default function Playthrough({
   title,
   platform,
   status,
-  updateHandler,
+  handleUpdate,
 }: PlaythroughProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,7 +28,7 @@ export default function Playthrough({
     newPlatform: string,
     newStatus: string,
   ) {
-    updateHandler(id, newTitle, newPlatform, newStatus);
+    handleUpdate(id, newTitle, newPlatform, newStatus);
     setIsOpen(false);
   }
 

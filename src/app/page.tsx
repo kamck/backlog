@@ -1,6 +1,7 @@
 "use client";
 
 import Playthrough from "./components/Playthrough";
+import StatusGroup from "./components/StatusGroup";
 import type { Playthrough as TPlaythrough } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { getAll, create, update } from "./lib/apiclient";
@@ -65,36 +66,23 @@ export default function Page() {
     });
   }
 
-  const buildList = (status: string) =>
-    playthroughs
-      .filter((p) => p.status === status)
-      .map((d) => (
-        <Playthrough
-          key={d.id}
-          id={d.id}
-          title={d.title}
-          platform={d.platform}
-          status={d.status}
-          updateHandler={updatePlaythrough}
-        />
-      ));
-
   return (
     <>
-      <div>
-        <h1>Unplayed</h1>
-        <ul>{buildList("UNPLAYED")}</ul>
-      </div>
-
-      <div>
-        <h1>Unfinished</h1>
-        <ul>{buildList("UNFINISHED")}</ul>
-      </div>
-
-      <div>
-        <h1>Finished</h1>
-        <ul>{buildList("FINISHED")}</ul>
-      </div>
+      <StatusGroup
+        status="Unplayed"
+        playthroughs={playthroughs}
+        handleUpdate={updatePlaythrough}
+      />
+      <StatusGroup
+        status="Unfinished"
+        playthroughs={playthroughs}
+        handleUpdate={updatePlaythrough}
+      />
+      <StatusGroup
+        status="Finished"
+        playthroughs={playthroughs}
+        handleUpdate={updatePlaythrough}
+      />
 
       <div>
         <input type="text" id="ftitle" name="ftitle" />
