@@ -1,11 +1,12 @@
 "use client";
 
 import Playthrough from "./components/Playthrough";
+import type { Playthrough as TPlaythrough } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { getAll, create, update } from "./lib/apiclient";
 
 export default function Page() {
-  const [playthroughs, setPlaythroughs] = useState([]);
+  const [playthroughs, setPlaythroughs] = useState<TPlaythrough[]>([]);
 
   useEffect(getData, []);
 
@@ -21,7 +22,7 @@ export default function Page() {
     const title = (document.getElementById("ftitle") as HTMLInputElement).value;
     const platform = (document.getElementById("fplatform") as HTMLInputElement)
       .value;
-    const data = { title, platform };
+    const data = { title, platform, status: "UNPLAYED" };
 
     create(data).then((response) => {
       if (response.ok) {
