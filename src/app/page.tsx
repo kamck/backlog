@@ -40,11 +40,15 @@ export default function Page() {
     title: string,
     platform: string,
     status: string,
+    startedOn: Date,
+    finishedOn: Date,
   ) {
     update(id, {
       title,
       platform,
       status,
+      startedOn,
+      finishedOn,
     }).then((response) => {
       if (response.ok) {
         const index = playthroughs.findIndex((x) => x.id === id);
@@ -53,6 +57,8 @@ export default function Page() {
           pt.title = title;
           pt.platform = platform;
           pt.status = status;
+          pt.startedOn = startedOn;
+          pt.finishedOn = finishedOn;
 
           setPlaythroughs(playthroughs.toSpliced(index, 1, pt));
         } else {

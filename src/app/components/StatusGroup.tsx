@@ -13,6 +13,8 @@ export default function StatusGroup({
     title: string,
     platform: string,
     status: string,
+    startedOn: Date,
+    finishedOn: Date,
   ) => void;
 }) {
   const buildList = playthroughs

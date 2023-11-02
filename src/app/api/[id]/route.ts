@@ -1,5 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 
+function getDate(dateStr: string) {
+  return dateStr.trim().length > 0 ? new Date(dateStr) : null;
+}
+
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } },
@@ -17,6 +21,8 @@ export async function PATCH(
       title: myData.title,
       platform: myData.platform,
       status: myData.status,
+      startedOn: getDate(myData.startedOn),
+      finishedOn: getDate(myData.finishedOn),
     },
   });
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TPlaythrough } from "@prisma/client";
+import { Playthrough as TPlaythrough } from "@prisma/client";
 import EditPlaythrough from "./EditPlaythrough";
 
 interface PlaythroughProps {
@@ -9,6 +9,8 @@ interface PlaythroughProps {
     title: string,
     platform: string,
     status: string,
+    startedOn: Date,
+    finishedOn: Date,
   ) => void;
 }
 
@@ -19,11 +21,20 @@ export default function Playthrough({
   const [isOpen, setIsOpen] = useState(false);
 
   function savePlaythrough(
-    newTitle: string,
-    newPlatform: string,
-    newStatus: string,
+    title: string,
+    platform: string,
+    status: string,
+    startedOn: Date,
+    finishedOn: Date,
   ) {
-    handleUpdate(playthrough.id, newTitle, newPlatform, newStatus);
+    handleUpdate(
+      playthrough.id,
+      title,
+      platform,
+      status,
+      startedOn,
+      finishedOn,
+    );
     setIsOpen(false);
   }
 
@@ -40,7 +51,9 @@ export default function Playthrough({
     return (
       <li onClick={() => setIsOpen(true)}>
         {playthrough.title} <span>{playthrough.platform}</span>
-        <span>dates</span>
+        <span>
+          {playthrough.startedOn} {playthrough.finishedOn}
+        </span>
       </li>
     );
   }

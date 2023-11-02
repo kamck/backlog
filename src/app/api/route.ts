@@ -11,6 +11,8 @@ export async function GET() {
       title: p.title,
       platform: p.platform,
       status: p.status,
+      startedOn: p.startedOn?.toISOString().substring(0, 10),
+      finishedOn: p.finishedOn?.toISOString().substring(0, 10),
     };
   });
 
@@ -31,6 +33,7 @@ export async function POST(request: Request) {
 
   return new Response(
     JSON.stringify({
+      id: playthrough.id,
       title: playthrough.title,
       platform: playthrough.platform,
       status: playthrough.status,

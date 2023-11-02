@@ -2,23 +2,30 @@ import { Playthrough } from "@prisma/client";
 
 interface NewPlaythroughProps {
   playthrough: Playthrough;
-  updateHandler: (title: string, platform: string, status: string) => void;
+  updateHandler: (
+    title: string,
+    platform: string,
+    status: string,
+    startedOn: Date,
+    finishedOn: Date,
+  ) => void;
 }
 
 export default function NewPlaythrough({
   playthrough,
   updateHandler,
 }: NewPlaythroughProps) {
-  function updatePlaythrough() {
-    const myTitle = (document.getElementById("ftitle") as HTMLInputElement)
-      .value;
-    const myPlatform = (
-      document.getElementById("fplatform") as HTMLInputElement
-    ).value;
-    const myStatus = (document.getElementById("fstatus") as HTMLInputElement)
-      .value;
+  const getVal = (id: string) =>
+    (document.getElementById(id) as HTMLInputElement).value;
 
-    updateHandler(myTitle, myPlatform, myStatus);
+  function updatePlaythrough() {
+    updateHandler(
+      getVal("ftitle"),
+      getVal("fplatform"),
+      getVal("fstatus"),
+      getVal("fstart"),
+      getVal("ffinish"),
+    );
   }
 
   return (
@@ -35,6 +42,8 @@ export default function NewPlaythrough({
           <option value="UNFINISHED">Unfinished</option>
           <option value="FINISHED">Finished</option>
         </select>
+        <input type="date" id="fstart" defaultValue={playthrough.startedOn} />
+        <input type="date" id="ffinish" defaultValue={playthrough.finishedOn} />
         <div style={{ float: "none" }}>
           <button id="fsave" name="fsave" onClick={updatePlaythrough}>
             Save
