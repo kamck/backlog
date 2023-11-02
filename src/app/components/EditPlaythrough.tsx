@@ -1,6 +1,6 @@
 import { Playthrough } from "@prisma/client";
 
-interface NewPlaythroughProps {
+interface EditPlaythroughProps {
   playthrough: Playthrough;
   updateHandler: (
     title: string,
@@ -11,10 +11,10 @@ interface NewPlaythroughProps {
   ) => void;
 }
 
-export default function NewPlaythrough({
+export default function EditPlaythrough({
   playthrough,
   updateHandler,
-}: NewPlaythroughProps) {
+}: EditPlaythroughProps) {
   const getVal = (id: string) =>
     (document.getElementById(id) as HTMLInputElement).value;
 
