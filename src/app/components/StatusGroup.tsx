@@ -18,14 +18,7 @@ export default function StatusGroup({
   const buildList = playthroughs
     .filter((p) => p.status === status.toUpperCase())
     .map((d) => (
-      <Playthrough
-        key={d.id}
-        id={d.id}
-        title={d.title}
-        platform={d.platform}
-        status={d.status}
-        handleUpdate={handleUpdate}
-      />
+      <Playthrough key={d.id} playthrough={d} handleUpdate={handleUpdate} />
     ));
 
   return (

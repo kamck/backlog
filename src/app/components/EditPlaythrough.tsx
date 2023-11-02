@@ -1,16 +1,12 @@
-import { useState } from "react";
+import { Playthrough } from "@prisma/client";
 
 interface NewPlaythroughProps {
-  title: string;
-  platform: string;
-  status: string;
+  playthrough: Playthrough;
   updateHandler: (title: string, platform: string, status: string) => void;
 }
 
 export default function NewPlaythrough({
-  title,
-  platform,
-  status,
+  playthrough,
   updateHandler,
 }: NewPlaythroughProps) {
   function updatePlaythrough() {
@@ -28,9 +24,13 @@ export default function NewPlaythrough({
   return (
     <li>
       <div className="playthroughedit">
-        <input id="ftitle" name="ftitle" defaultValue={title} />
-        <input id="fplatform" name="fplatform" defaultValue={platform} />
-        <select id="fstatus" name="fstatus" defaultValue={status}>
+        <input id="ftitle" name="ftitle" defaultValue={playthrough.title} />
+        <input
+          id="fplatform"
+          name="fplatform"
+          defaultValue={playthrough.platform}
+        />
+        <select id="fstatus" name="fstatus" defaultValue={playthrough.status}>
           <option value="UNPLAYED">Unplayed</option>
           <option value="UNFINISHED">Unfinished</option>
           <option value="FINISHED">Finished</option>
