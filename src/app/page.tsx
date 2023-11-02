@@ -1,6 +1,5 @@
 "use client";
 
-import Playthrough from "./components/Playthrough";
 import StatusGroup from "./components/StatusGroup";
 import type { Playthrough as TPlaythrough } from "@prisma/client";
 import { useEffect, useState } from "react";
