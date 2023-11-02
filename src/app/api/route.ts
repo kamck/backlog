@@ -5,7 +5,6 @@ export async function GET() {
   const playthroughs = await prisma.playthrough.findMany();
 
   const data = playthroughs.map((p) => {
-    console.debug(`Status for ${p.id} is ${p.status}`);
     return {
       id: p.id,
       title: p.title,
