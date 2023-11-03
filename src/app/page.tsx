@@ -22,7 +22,7 @@ export default function Page() {
     const title = (document.getElementById("ftitle") as HTMLInputElement).value;
     const platform = (document.getElementById("fplatform") as HTMLInputElement)
       .value;
-    const data = { title, platform, status: "UNPLAYED" };
+    const data = { title, platform };
 
     create(data).then((response) => {
       if (response.ok) {
