@@ -26,7 +26,9 @@ export default function Page() {
 
     create(data).then((response) => {
       if (response.ok) {
-        setPlaythroughs([...playthroughs, data]);
+        response
+          .json()
+          .then((json) => setPlaythroughs([...playthroughs, json]));
       } else {
         alert("An error occurred");
         console.log(response);
