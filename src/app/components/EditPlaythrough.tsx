@@ -6,8 +6,8 @@ interface EditPlaythroughProps {
     title: string,
     platform: string,
     status: string,
-    startedOn: Date,
-    finishedOn: Date,
+    startedOn: string,
+    finishedOn: string,
   ) => void;
 }
 
