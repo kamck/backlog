@@ -20,6 +20,13 @@ export default function Playthrough({
 }: PlaythroughProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  function getDate(date: string) {
+    if (date) {
+      return date.substring(0, 10);
+    }
+    return "";
+  }
+
   function savePlaythrough(
     title: string,
     platform: string,
@@ -52,7 +59,7 @@ export default function Playthrough({
       <li onClick={() => setIsOpen(true)}>
         {playthrough.title} <span>{playthrough.platform}</span>
         <span>
-          {playthrough.startedOn} {playthrough.finishedOn}
+          {getDate(playthrough.startedOn)} {getDate(playthrough.finishedOn)}
         </span>
       </li>
     );
