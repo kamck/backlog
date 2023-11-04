@@ -18,6 +18,13 @@ export default function EditPlaythrough({
   const getVal = (id: string) =>
     (document.getElementById(id) as HTMLInputElement).value;
 
+  function getDate(date: string | null | undefined) {
+    if (date) {
+      return date.toISOString().substring(0, 10);
+    }
+    return "";
+  }
+
   function updatePlaythrough() {
     updateHandler(
       getVal("ftitle"),
@@ -42,8 +49,16 @@ export default function EditPlaythrough({
           <option value="UNFINISHED">Unfinished</option>
           <option value="FINISHED">Finished</option>
         </select>
-        <input type="date" id="fstart" defaultValue={playthrough.startedOn} />
-        <input type="date" id="ffinish" defaultValue={playthrough.finishedOn} />
+        <input
+          type="date"
+          id="fstart"
+          defaultValue={getDate(playthrough.startedOn)}
+        />
+        <input
+          type="date"
+          id="ffinish"
+          defaultValue={getDate(playthrough.finishedOn)}
+        />
         <div style={{ float: "none" }}>
           <button id="fsave" name="fsave" onClick={updatePlaythrough}>
             Save

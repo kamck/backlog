@@ -22,7 +22,7 @@ export default function Playthrough({
 
   function getDate(date: string) {
     if (date) {
-      return date.substring(0, 10);
+      return date.toISOString().substring(0, 10);
     }
     return "";
   }
