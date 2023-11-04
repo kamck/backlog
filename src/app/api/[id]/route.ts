@@ -15,7 +15,7 @@ export async function PATCH(
     return new Response(null, { status: 422 });
   }
 
-  await prisma.playthrough.update({
+  const updatePlaythrough = await prisma.playthrough.update({
     where: { id: Number(params.id) },
     data: {
       title: myData.title,
@@ -26,5 +26,5 @@ export async function PATCH(
     },
   });
 
-  return new Response();
+  return new Response(JSON.stringify(updatePlaythrough));
 }

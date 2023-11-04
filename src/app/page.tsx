@@ -54,14 +54,11 @@ export default function Page() {
       if (response.ok) {
         const index = playthroughs.findIndex((x) => x.id === id);
         if (index !== -1) {
-          const pt = playthroughs[index];
-          pt.title = title;
-          pt.platform = platform;
-          pt.status = status;
-          pt.startedOn = startedOn;
-          pt.finishedOn = finishedOn;
-
-          setPlaythroughs(playthroughs.toSpliced(index, 1, pt));
+          response
+            .json()
+            .then((json) =>
+              setPlaythroughs(playthroughs.toSpliced(index, 1, json)),
+            );
         } else {
           alert("An error occurred");
           console.log(response);

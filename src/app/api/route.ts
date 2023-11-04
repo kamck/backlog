@@ -10,8 +10,8 @@ export async function GET() {
       title: p.title,
       platform: p.platform,
       status: p.status,
-      startedOn: p.startedOn?.toISOString().substring(0, 10),
-      finishedOn: p.finishedOn?.toISOString().substring(0, 10),
+      startedOn: p.startedOn,
+      finishedOn: p.finishedOn,
     };
   });
 
