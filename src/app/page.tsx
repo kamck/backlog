@@ -1,19 +1,19 @@
 "use client";
 
+import { useEffect, useReducer } from "react";
 import StatusGroup from "./components/StatusGroup";
-import type { Playthrough as TPlaythrough } from "@prisma/client";
-import { useEffect, useState } from "react";
 import { getAll, create, update } from "./lib/apiclient";
+import { playthroughReducer } from "./lib/playthroughReducer";
 
 export default function Page() {
-  const [playthroughs, setPlaythroughs] = useState<TPlaythrough[]>([]);
+  const [playthroughs, dispatch] = useReducer(playthroughReducer, []);
 
   useEffect(getData, []);
 
   function getData() {
     getAll().then((res) => {
       if (res.ok) {
-        res.json().then((json) => setPlaythroughs(json));
+        res.json().then((json) => dispatch({ type: "load", data: json }));
       }
     });
   }
@@ -28,7 +28,7 @@ export default function Page() {
       if (response.ok) {
         response
           .json()
-          .then((json) => setPlaythroughs([...playthroughs, json]));
+          .then((json) => dispatch({ type: "add", newPlaythrough: json }));
       } else {
         alert("An error occurred");
         console.log(response);
@@ -52,17 +52,9 @@ export default function Page() {
       finishedOn,
     }).then((response) => {
       if (response.ok) {
-        const index = playthroughs.findIndex((x) => x.id === id);
-        if (index !== -1) {
-          response
-            .json()
-            .then((json) =>
-              setPlaythroughs(playthroughs.toSpliced(index, 1, json)),
-            );
-        } else {
-          alert("An error occurred");
-          console.log(response);
-        }
+        response
+          .json()
+          .then((json) => dispatch({ type: "update", updated: json }));
       } else {
         alert("An error occurred");
         console.log(response);
